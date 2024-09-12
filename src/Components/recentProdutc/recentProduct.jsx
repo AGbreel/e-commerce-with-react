@@ -40,8 +40,10 @@ export default function RecentProduct({ product }) {
       </div> */}
 
       <div className="w-full xs:w-1/2 sm:w-1/3 md:w-1/4 p-10 mx-auto cursor-pointer relative rounded-lg hover:shadow-lg hover:shadow-[#0AAD0A] duration-700">
-      {wishlistIds.includes(product.id) ? <i onClick={() => removeProductFromWishlist(product.id)} className="fa-solid fa-heart text-2xl absolute top-10 right-5 text-red-600"></i>
+      {wishlistIds?.includes(product.id) ? <i onClick={() => removeProductFromWishlist(product.id)} className="fa-solid fa-heart text-2xl absolute top-10 right-5 text-red-600"></i>
        : <i onClick={() => addProductToWishlist(product.id)} className="fa-regular fa-heart text-2xl absolute top-10 right-5" ></i>}
+
+     
 
       <Link to={`/productdetails/${product.id}`}>
         <div className="w-full max-w-sm aspect-square">

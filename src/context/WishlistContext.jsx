@@ -10,14 +10,13 @@ import { json } from "react-router-dom";
 export default function WishlistContextProvider({ children }) {
   let headers = { token: localStorage.getItem("userToken") };
   const [wishlist, setWishlist] = useState([]);
-  const [wishlistIds, setWishlistIds] = useState([]);
+  let [wishlistIds, setWishlistIds] = useState([]);
   const [isFavorites, setIsFavorites] = useState(false);
   const [productID, setProductID] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // ! Toggle wishlist item
   function toggleWishlist(productId) {
-
     if (wishlistIds.includes(productId)) {
       setWishlistIds(wishlistIds.filter((id) => id !== productId));
     } else {
@@ -81,15 +80,20 @@ export default function WishlistContextProvider({ children }) {
       toast.success(data.message);
       getWishlistProducts();
     } catch (err) {
-      toast.error(err.response.data.message);
-      console.log(err.response.data.message);
+      toast.error(err);
+      console.log(err);
     }
   }
 
   useEffect(() => {
     const savedWishlist = JSON.parse(localStorage.getItem("wishlistIds"));
-    setWishlistIds(savedWishlist);
+    if (savedWishlist) {
+      setWishlistIds(savedWishlist);
+    } else {
+      setWishlistIds([]); // Initialize with an empty array if there is no saved wishlist
+    }
   }, []);
+  
 
   // Save wishlist to localStorage whenever it changes
   useEffect(() => {
